@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wumpus World — Logic Agent</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- SETUP SCREEN -->
+    <div id="setup-screen">
+      <h1>Wumpus World</h1>
+      <p>
+        A knowledge-based agent that navigates a Wumpus World grid using
+        propositional logic and resolution refutation to deduce safe cells.
+      </p>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="rows-input">ROWS</label>
+          <input type="number" id="rows-input" value="4" min="3" max="8" />
+        </div>
+        <div class="form-group">
+          <label for="cols-input">COLUMNS</label>
+          <input type="number" id="cols-input" value="4" min="3" max="8" />
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:1rem;">
+        <label for="pits-input">NUMBER OF PITS</label>
+        <input type="number" id="pits-input" value="3" min="1" max="6" />
+      </div>
+      <button id="start-btn">Start game</button>
+    </div>
+
+    <!-- GAME SCREEN -->
+    <div id="game-screen" style="display:none;">
+      <div class="game-header">
+        <span class="game-title">Wumpus World — Logic Agent</span>
+        <button id="restart-btn">New game</button>
+      </div>
+
+      <div id="status-msg"></div>
+
+      <div class="game-layout">
+        <!-- LEFT: grid + log -->
+        <div>
+          <div class="panel" style="margin-bottom:12px;">
+            <h3>Grid</h3>
+            <div id="grid-container">
+              <div id="grid"></div>
+            </div>
+            <div class="legend">
+              <div class="legend-item">
+                <div class="legend-swatch safe-swatch"></div>safe
+              </div>
+              <div class="legend-item">
+                <div class="legend-swatch unknown-swatch"></div>unknown
+              </div>
+              <div class="legend-item">
+                <div class="legend-swatch danger-swatch"></div>danger
+              </div>
+              <div class="legend-item">
+                <div class="legend-swatch agent-swatch"></div>agent
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>Inference log</h3>
+            <div id="log"></div>
+          </div>
+        </div>
+
+        <!-- RIGHT: metrics, percepts, KB, controls -->
+        <div>
+          <div class="panel" style="margin-bottom:12px;">
+            <h3>Metrics</h3>
+            <div class="metric-row">
+              <span class="metric-label">Inference steps</span>
+              <span class="metric-value" id="m-steps">0</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Cells visited</span>
+              <span class="metric-value" id="m-visited">0</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Safe deduced</span>
+              <span class="metric-value" id="m-safe">0</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Dangers found</span>
+              <span class="metric-value" id="m-danger">0</span>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-bottom:12px;">
+            <h3>Current percepts</h3>
+            <div id="percept-display">—</div>
+          </div>
+
+          <div class="panel" style="margin-bottom:12px;">
+            <div class="kb-header">
+              <h3>Knowledge base</h3>
+              <label class="kb-toggle">
+                <input type="checkbox" id="kb-mode-toggle" />
+                Show CNF
+              </label>
+            </div>
+            <div id="kb-display">—</div>
+          </div>
+
+          <div class="panel">
+            <h3>Controls</h3>
+            <div class="btn-row">
+              <button id="btn-step">Step agent</button>
+              <button id="btn-auto">Auto run</button>
+            </div>
+            <p class="hint">Or click any adjacent cell to move manually.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="agent.js"></script>
+</body>
+</html>
